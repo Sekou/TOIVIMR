@@ -13,7 +13,7 @@ def drawText(screen, s, x, y):
     surf=font.render(s, True, (0,0,0))
     screen.blit(surf, (x,y))
 
-
+#робот в виде оси графика
 class Axis:
     def __init__(self, id, x, y, lx, ly):
         self.id, self.x, self.y, self.lx, self.ly=id, x, y, lx, ly
@@ -35,17 +35,6 @@ class Axis:
 
     def getTotalTime(self, tasks):
         return sum(tasks[i] for i in self.taskIds)
-
-def drawRotRect(screen, color, pc, w, h, ang): #точка центра, ширина высота прямоуг и угол поворота прямогуольника
-    pts = [
-        [- w/2, - h/2],
-        [+ w/2, - h/2],
-        [+ w/2, + h/2],
-        [- w/2, + h/2],
-    ]
-    pts = rotArr(pts, ang)
-    pts = np.add(pts, pc)
-    pygame.draw.polygon(screen, color, pts, 2)
 
 def getPartitions(lst, numGroups, recursionLevel=0):
     if len(lst)==0:  # если список пустой, вернуть пустой список
