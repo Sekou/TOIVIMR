@@ -37,7 +37,7 @@ class Axis:
         return sum(tasks[i] for i in self.taskIds)
 
 def getPartitions(lst, numGroups, recursionLevel=0):
-    if len(lst)==0:  # если список пустой, вернуть пустой список
+    if len(lst)==0:  # если список пустой, вернуть пустое назначение
         return [[]]
     result = []
     # проходим по всем величинам групп
@@ -98,9 +98,6 @@ def main():
         for ev in pygame.event.get():
             if ev.type==pygame.QUIT:
                 sys.exit(0)
-            if ev.type == pygame.KEYDOWN:
-                if ev.key == pygame.K_r:
-                    print("Hi")
 
         screen.fill((255, 255, 255))
 
