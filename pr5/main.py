@@ -1,4 +1,4 @@
-#ORB example
+#FAST example
 import cv2
 import numpy as np
 
