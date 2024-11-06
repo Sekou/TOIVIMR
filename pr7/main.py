@@ -47,15 +47,14 @@ pts2 = rotate(pts, 45*kpi, 0, 0)
 pts2 = pts2 + [0.5,0.3,0.1]
 
 def calcAxisAngle(c, pts, pts2):
-    def findNeighbour(p, pts2):
+    vsum=np.zeros(3)
+    asum, cnt = 0, 0
+    for p in pts:
+        #ищем ближайшую точку
         dd = [np.linalg.norm(np.subtract(p, p2)) for p2 in pts2]
         i = np.argmin(dd)
-        return pts[i]
-    vsum=np.zeros(3)
-    asum=0
-    cnt=0
-    for p in pts:
-        nb = findNeighbour(p, pts2)
+        nb = pts2[i]
+        #вычисляем угол
         v1 = np.subtract(p, c)
         v2 = np.subtract(nb, c)
         z=np.cross(v1, v2)
@@ -67,10 +66,7 @@ def calcAxisAngle(c, pts, pts2):
                 vsum+=z
                 asum+=ang
                 cnt+=1
-            if cnt>0:
-                vsum/=cnt
-                asum/=cnt
-    return vsum, asum
+    return vsum/np.linalg.norm(vsum), asum/cnt
 
 def getRotMat(axis, angle):
     x,y,z=axis
@@ -107,13 +103,12 @@ def main():
                     TR=c1-c2
                     pts2=[p + TR for p in pts2]
                 if event.key==K_2:
-                    c1 = np.mean(pts, axis=0)
+                    c = np.mean(pts, axis=0) #общий центр совмещенных облаков
                     v,a=calcAxisAngle(c1, pts, pts2)
-                    R=getRotMat(v, a)
-                    c2 = np.mean(pts, axis=0)
-                    pts2 = [p - c2 for p in pts2]
+                    R=getRotMat(v, -a)
+                    pts2 = [p - c for p in pts2]
                     pts2=np.transpose(R.dot(np.transpose(pts2)))
-                    pts2 = [p + c2 for p in pts2]
+                    pts2 = [p + c for p in pts2]
 
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         glClearColor(1, 1, 1, 1)
