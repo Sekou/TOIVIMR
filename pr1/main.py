@@ -28,7 +28,7 @@ def drawLine(screen):
 def calcMSE():
     res=0
     for p in pts:
-        dy=p[0]-(k*p[0]+b)
+        dy=p[1]-(k*p[0]+b)
         res+=dy*dy
     return res/len(pts)
 
