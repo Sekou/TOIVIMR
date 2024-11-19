@@ -16,9 +16,8 @@ def decode(out, symbols):
 
 def createModel(ndims):
     model = tf.keras.Sequential([
-        tf.keras.layers.Dense(units=ndims, activation='tanh',
-            input_shape=[ndims]),
-        # tf.keras.layers.LSTM(units=ndims),
+        tf.keras.layers.LSTM(units=ndims, input_shape=[1, ndims]),
+        # tf.keras.layers.Dense(units=ndims, activation='tanh', input_shape=[ndims]),
         tf.keras.layers.Dense(units=ndims, activation=tf.nn.softmax)
     ])
     return model
@@ -27,12 +26,12 @@ def createModel(ndims):
 def trainNet(model, X_train, Y_train, X_val, Y_val):
     model.summary()
 
-    model.compile(optimizer='adam', loss='mse')
+    model.compile(optimizer='adam', loss='categorical_crossentropy')
 
     losses = model.fit(X_train, Y_train,
                        validation_data=(X_val, Y_val),
-                       batch_size=1,
-                       epochs=100)
+                       batch_size=5,
+                       epochs=50)
 
     result=model.predict(np.array([X_train[0]]))
     print(result)
