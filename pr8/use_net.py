@@ -3,7 +3,7 @@ import cv2
 import network
 
 net = network.make_net()
-net.load_weights("net.h5")
+net.load_weights("net.weights.h5")
 
 scene = cv2.imread("images\\scene.png")
 arr = np.asarray(scene)
