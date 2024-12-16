@@ -44,5 +44,5 @@ net.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accurac
 
 net.fit(train_images, train_labels, batch_size=5, epochs=3)
 
-net.save_weights("net.h5")
+net.save_weights("net.weights.h5")
 
